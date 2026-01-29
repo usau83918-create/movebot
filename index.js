@@ -339,7 +339,6 @@ bot.on('message', async (msg) => {
                         genre: movieInfo.janr,
                         year: movieInfo.chiqarilgan_yili,
                         message_id: messageId,
-                        file_id: forwardedMsg.video.file_id,
                         added_date: new Date().toISOString()
                     };
 
@@ -375,7 +374,6 @@ bot.on('message', async (msg) => {
                     delete tempData[userId];
 
                 } catch (error) {
-                    console.error('❌ Videoni olishda xatolik:', error);
                     await bot.deleteMessage(chatId, loadingMsg.message_id);
                     await bot.sendMessage(
                         chatId,
@@ -481,7 +479,6 @@ Qaytadan /add ni bosing`
         }
 
     } catch (error) {
-        console.error('❌ Xabarni qayta ishlashda xatolik:', error);
         await bot.sendMessage(chatId, '❌ Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
     }
 });
