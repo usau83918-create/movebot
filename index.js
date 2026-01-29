@@ -4,11 +4,13 @@ const path = require('path');
 require('dotenv').config();
 
 // ================== MUHIM: .env faylini tekshirish ==================
-const BOT_TOKEN = process.env.BOT_TOKEN;
-const CHANNEL_USERNAME = process.env.CHANNEL_USERNAME;
-const CHANNEL_ID = Number(process.env.CHANNEL_ID);
-const ADMIN_ID = Number(process.env.ADMIN_ID);
-const PRIVATE_CHANNEL_ID = Number(process.env.PRIVATE_CHANNEL_ID);
+
+
+const BOT_TOKEN = `8540792652:AAHTqikJgOKWiqlpnGHv9uWS9tPhhQv0Igw`;
+const CHANNEL_USERNAME = `@UzKinoPremiera`;
+const CHANNEL_ID = -1003707805152;
+const ADMIN_ID = 7542365426;
+const PRIVATE_CHANNEL_ID = 1003415052995;
 
 // Muhim ma'lumotlar mavjudligini tekshirish
 if (!BOT_TOKEN) {
