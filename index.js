@@ -1,5 +1,4 @@
 const TelegramBot = require('node-telegram-bot-api');
-const { SocksProxyAgent } = require('socks-proxy-agent');
 const fs = require('fs').promises;
 const path = require('path');
 require('dotenv').config();
@@ -13,22 +12,14 @@ const PRIVATE_CHANNEL_ID = Number(process.env.PRIVATE_CHANNEL_ID);
 
 // Muhim ma'lumotlar mavjudligini tekshirish
 if (!BOT_TOKEN) {
-    console.error('❌ BOT_TOKEN topilmadi! .env faylini tekshiring');
     process.exit(1);
 }
 
 if (!CHANNEL_ID || !ADMIN_ID) {
-    console.error('❌ CHANNEL_ID yoki ADMIN_ID topilmadi!');
     process.exit(1);
 }
 
-console.log('✅ BOT_TOKEN: ', BOT_TOKEN.substring(0, 10) + '...');
-console.log('✅ CHANNEL_ID:', CHANNEL_ID);
-console.log('✅ ADMIN_ID:', ADMIN_ID);
 
-// SOCKS5 proxy
-const USE_PROXY = process.env.USE_PROXY === 'true';
-const PROXY_URL = process.env.PROXY_URL || 'socks5://127.0.0.1:1080';
 
 const botOptions = {
     polling: {
@@ -40,16 +31,10 @@ const botOptions = {
     }
 };
 
-if (USE_PROXY) {
-    console.log('🌐 Proxy ishlatilmoqda:', PROXY_URL);
-    botOptions.request = {
-        agent: new SocksProxyAgent(PROXY_URL)
-    };
-}
+
 
 const bot = new TelegramBot(BOT_TOKEN, botOptions);
 
-console.log('🤖 Bot ishga tushirilmoqda...');
 
 // ================== KINOLAR FAYLINI BOSHQARISH ==================
 const MOVIES_FILE = path.join(__dirname, 'movies.json');
@@ -163,14 +148,12 @@ A'zo bo'lgach, pastdagi *✅ Tekshirish* tugmasini bosing`,
             );
         }
     } catch (error) {
-        console.error('❌ Welcome xabar yuborishda xatolik:', error);
         await bot.sendMessage(chatId, 'Xatolik yuz berdi. Qaytadan /start bosing');
     }
 }
 
 // ================== /START ==================
 bot.onText(/\/start/, async (msg) => {
-    console.log('📨 /start komandasi olindi:', msg.from.id);
     await sendWelcome(msg.chat.id, msg.from.id, msg.from.first_name);
 });
 
@@ -179,7 +162,6 @@ bot.onText(/\/add/, async (msg) => {
     const chatId = msg.chat.id;
     const userId = msg.from.id;
 
-    console.log('📨 /add komandasi:', userId);
 
     if (userId !== ADMIN_ID) {
         await bot.sendMessage(chatId, '❌ Bu komanda faqat admin uchun!');
@@ -502,18 +484,4 @@ Qaytadan /add ni bosing`
     }
 });
 
-// ================== XATOLAR ==================
-bot.on('polling_error', (error) => {
-    console.error('❌ Polling xatolik:', error.code, error.message);
-});
 
-// Bot ishga tushganda
-bot.on('polling', () => {
-    console.log('✅ Bot muvaffaqiyatli ishga tushdi!');
-});
-
-bot.on('video', (msg) => {
-    console.log('📹 Video file_id:', msg.video.file_id);
-});
-
-console.log('⏳ Botni kutmoqdamiz...');
