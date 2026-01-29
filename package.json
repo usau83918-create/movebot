@@ -1,0 +1,25 @@
+{
+    "name": "telegram-cinema-bot",
+    "version": "1.0.0",
+    "description": "Telegram bot for sharing movies with subscription check",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "keywords": [
+        "telegram",
+        "bot",
+        "cinema",
+        "movies"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "node-telegram-bot-api": "^0.64.0",
+        "dotenv": "^16.3.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    }
+}
